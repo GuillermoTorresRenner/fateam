@@ -1,7 +1,15 @@
 {
   "expo": {
-    "name": "Inventario",
-    "slug": "Inventario",
+    "plugins": [
+       [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
+        }
+      ]
+    ],
+    "name":"Mamushka",
+    "slug": "Mamushka",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
