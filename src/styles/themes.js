@@ -1,13 +1,14 @@
 export default theme = {
   colors: {
-    primary: "#6200ee",
-    secondary: "#f6f6f6",
-    info: "#ffffff",
-    accent: "#f6f6f6",
-    warning: "#333333",
-    danger: "#f6f6f6",
-    light: "#ffffff",
-    dark: "#333333",
+    primary: "#F57C00",
+    secondary: "#7f5f1e",
+    success: "#FFE0B2",
+    info: "#757575",
+    accent: "#7C4DFF",
+    warning: " #FFC107",
+    danger: "#E91E63",
+    light: "#BDBDBD",
+    dark: "#212121",
   },
   fontSizes: {
     sm: 12,

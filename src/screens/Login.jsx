@@ -7,6 +7,7 @@ import {
   ImageBackground,
   TextInput,
 } from "react-native";
+import themes from "../styles/themes";
 import Background from "../../assets/Background.png";
 import { StatusBar } from "expo-status-bar";
 
@@ -26,14 +27,14 @@ const Login = ({ navigation }) => {
         <View style={{ marginBottom: 60, gap: 10, paddingHorizontal: 20 }}>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Email"
+              placeholder="Ingrese su Email"
               style={styles.input}
               placeholderTextColor="grey"
               onChangeText={setEmail}
               value={email}
             />
             <TextInput
-              placeholder="Password"
+              placeholder="Ingrese su Password"
               style={styles.input}
               placeholderTextColor="grey"
               onChangeText={setPassword}
@@ -41,12 +42,16 @@ const Login = ({ navigation }) => {
               secureTextEntry
             />
           </View>
-          <Button title="Ingresar" onPress={handleSubmit} color="#7f5f1eff" />
+          <Button
+            title="Ingresar"
+            onPress={handleSubmit}
+            color={themes.colors.secondary}
+          />
           <Text style={styles.text}>o</Text>
           <Button
             title="cree una cuenta"
             onPress={handleSubmit}
-            color="rgba(0,0,0,0.0)"
+            color={themes.colors.info}
           />
         </View>
       </ImageBackground>
@@ -61,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    color: "grey",
+    color: themes.colors.light,
     textAlign: "center",
   },
   background: {
@@ -75,9 +80,9 @@ const styles = StyleSheet.create({
   input: {
     padding: 10,
     marginTop: 10,
-    color: "#fff",
+    color: themes.colors.light,
 
     borderWidth: 1,
-    borderColor: "#7f5f1eff",
+    borderColor: themes.colors.secondary,
   },
 });
