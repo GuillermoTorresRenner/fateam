@@ -7,8 +7,8 @@ import {
   ImageBackground,
   TextInput,
 } from "react-native";
-import themes from "../styles/themes";
-import Background from "../../assets/Background.png";
+import theme from "../theme/Theme";
+import Background from "../../assets/images/Background.png";
 import { StatusBar } from "expo-status-bar";
 
 const Login = ({ navigation }) => {
@@ -45,13 +45,13 @@ const Login = ({ navigation }) => {
           <Button
             title="Ingresar"
             onPress={handleSubmit}
-            color={themes.colors.secondary}
+            color={theme.colors.secondary}
           />
           <Text style={styles.text}>o</Text>
           <Button
             title="cree una cuenta"
             onPress={handleSubmit}
-            color={themes.colors.info}
+            color={theme.colors.info}
           />
         </View>
       </ImageBackground>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    color: themes.colors.light,
+    color: theme.colors.light,
     textAlign: "center",
   },
   background: {
@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
   input: {
     padding: 10,
     marginTop: 10,
-    color: themes.colors.light,
+    color: theme.colors.light,
 
     borderWidth: 1,
-    borderColor: themes.colors.secondary,
+    borderColor: theme.colors.secondary,
   },
 });
