@@ -1,13 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
-
-import Drawer from "./Drawer";
-
-// const Stack = createNativeStackNavigator();
+import { MainNavigator } from "./Routes";
 
 const Navigator = () => {
   return (
     <NavigationContainer>
-      <Drawer />
+      <MainNavigator />
     </NavigationContainer>
   );
 };

@@ -1,15 +1,10 @@
 {
   "expo": {
     "plugins": [
-       [
-        "expo-camera",
-        {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
-        }
-      ]
+      
     ],
-    "name":"Mamushka",
-    "slug": "Mamushka",
+    "name":"Fate",
+    "slug": "Fate",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
