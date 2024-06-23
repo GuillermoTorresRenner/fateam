@@ -1,37 +1,69 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
-
+import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import Theme from "../theme/Theme";
-import { MisPjsNavigator } from "./Routes";
+import {
+  CampaignsNavigator,
+  CharactersNavigator,
+  CreateCharacterNavigator,
+  DicesNavigator,
+  NotesNavigator,
+} from "./Routes";
 
 export default function Tabs() {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
+      initialRouteName="Personajes"
       screenOptions={{
         headerShown: true,
-        headerTintColor: Theme.colors.light,
-
+        headerTintColor: Theme.colors.white,
         headerStyle: {
           backgroundColor: Theme.colors.tertiary,
         },
-
-        TabStyle: {
-          backgroundColor: Theme.colors.tertiary,
-          width: "60%",
-        },
-        TabActiveTintColor: Theme.colors.light,
-        TabLabelStyle: {
-          color: Theme.colors.light,
+        tabBarInactiveTintColor: Theme.colors.tertiary,
+        tabBarActiveTintColor: Theme.colors.primary,
+        tabBarLabelStyle: {
+          fontSize: Theme.fontSizes.sm,
+          fontWeight: "bold",
         },
       }}
     >
       <Tab.Screen
-        name="MisPj"
-        component={MisPjsNavigator}
+        name="Personajes"
+        component={CharactersNavigator}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="home" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="id-card" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Campañas"
+        component={CampaignsNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="compass" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Dados"
+        component={DicesNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="dice-d6" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Notas"
+        component={NotesNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="pencil-alt" size={24} color={color} />
           ),
         }}
       />

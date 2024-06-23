@@ -3,11 +3,12 @@ export default Theme = {
     primary: "#1390F0",
     secondary: "#3A7DB0",
     tertiary: "#415C70",
-    accent: "#5CA06F",
+    success: "#5CA06F",
     warning: "#F5A83C",
     danger: "#E91E63",
     light: "#C2C7C5",
     dark: "#2A2F33",
+    white: "#FFFFFF",
   },
   fontSizes: {
     sm: 12,

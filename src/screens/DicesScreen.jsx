@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-export default MisPjsScreen = () => {
+export default function DicesScreen() {
   return (
     <View>
-      <Text>Mis Pjs</Text>
+      <Text>DicesScreen</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({});

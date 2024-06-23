@@ -8,11 +8,9 @@ import {
   Pressable,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import theme from "../theme/Theme";
 import Logo from "../../assets/images/Logo.png";
 import { StatusBar } from "expo-status-bar";
-import Theme from "../theme/Theme";
-import Tabs from "../Navigation/Tabs";
+import theme from "../theme/Theme";
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +23,11 @@ export default LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <Image source={Logo} style={styles.logo} />
+      <View style={styles.logoContainer}>
+        <Image source={Logo} style={styles.logo} />
+      </View>
+      <Text style={styles.text}>Iniciar Sesión</Text>
+      <Text style={styles.text2}>ingresa tus credenciales</Text>
 
       <View style={{ marginBottom: 60, gap: 10, paddingHorizontal: 20 }}>
         <View style={styles.inputContainer}>
@@ -47,17 +49,30 @@ export default LoginScreen = ({ navigation }) => {
         </View>
         <Pressable onPress={handleSubmit}>
           <View style={styles.btn}>
-            <AntDesign name="google" size={24} color={Theme.colors.light} />
-            <Text style={{ color: Theme.colors.light, marginHorizontal: 5 }}>
-              Ingresar
+            <Text style={{ color: theme.colors.white, marginHorizontal: 5 }}>
+              Continuar
             </Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate("Register")}>
+          <Text
+            style={{
+              color: theme.colors.primary,
+              marginHorizontal: 5,
+              textAlign: "right",
+              marginTop: 2,
+              marginBottom: 10,
+              paddingRight: 30,
+            }}
+          >
+            Crea una cuenta
+          </Text>
+        </Pressable>
+        <Pressable onPress={handleSubmit}>
           <View style={styles.btn}>
-            <AntDesign name="google" size={24} color={Theme.colors.light} />
-            <Text style={{ color: Theme.colors.light, marginHorizontal: 5 }}>
-              Register
+            <AntDesign name="google" size={24} color={Theme.colors.white} />
+            <Text style={{ color: theme.colors.white, marginHorizontal: 5 }}>
+              Continuar con google
             </Text>
           </View>
         </Pressable>
@@ -69,14 +84,27 @@ export default LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "space-around",
+  },
+  logoContainer: {
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 20,
   },
   logo: {
-    alignSelf: "center",
-
-    marginVertical: 50,
+    width: "80%",
+    resizeMode: "contain",
   },
   text: {
-    color: theme.colors.light,
+    color: theme.colors.primary,
+    fontFamily: "title_bold",
+    fontSize: theme.fontSizes.md,
+    textAlign: "center",
+  },
+  text2: {
+    color: theme.colors.secondary,
+    fontFamily: "title",
+    fontSize: theme.fontSizes.sm,
     textAlign: "center",
   },
 
@@ -96,11 +124,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     padding: 5,
-    backgroundColor: theme.colors.dark,
+    backgroundColor: theme.colors.primary,
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    width: "50%",
+    width: "80%",
+    height: 35,
     shadowColor: theme.colors.primary,
     shadowOffset: {
       width: 0,
