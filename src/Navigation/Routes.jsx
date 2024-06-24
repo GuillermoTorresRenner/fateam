@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View } from "react-native";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import Tabs from "./Tabs";
@@ -9,6 +8,7 @@ import DicesScreen from "../screens/DicesScreen";
 import NotesScreen from "../screens/NotesScreen";
 import CreateCharacterScreen from "../screens/CreateCharacterScreen";
 import Theme from "../theme/Theme";
+import CharacterDetail from "../screens/CharacterDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +29,13 @@ export function MainNavigator() {
       <Stack.Screen
         name="Crear Personaje"
         component={CreateCharacterScreen}
+        options={{
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="characterDetail"
+        component={CharacterDetail}
         options={{
           headerShown: true,
         }}

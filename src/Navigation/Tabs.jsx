@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -7,7 +6,6 @@ import Theme from "../theme/Theme";
 import {
   CampaignsNavigator,
   CharactersNavigator,
-  CreateCharacterNavigator,
   DicesNavigator,
   NotesNavigator,
 } from "./Routes";

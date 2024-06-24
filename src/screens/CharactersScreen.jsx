@@ -1,11 +1,19 @@
-import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import React from "react";
 import Fab from "../components/Fab";
+import CharacterCard from "../components/CharacterCard";
+import mock from "../utils/mock";
 
 const CharactersScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}></ScrollView>
+      <FlatList
+        data={mock}
+        keyExtractor={(char) => char.nombre}
+        renderItem={({ item }) => (
+          <CharacterCard character={item} navigation={navigation} />
+        )}
+      />
       <Fab goto={"Crear Personaje"} navigation={navigation} />
     </View>
   );

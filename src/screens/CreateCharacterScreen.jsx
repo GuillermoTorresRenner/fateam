@@ -1,25 +1,20 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { Pressable, ScrollView } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import React from "react";
 import BoxedTitle from "../components/BoxedTitle";
 import Input from "../components/Input";
-import Slider from "@react-native-community/slider";
-import Theme from "../theme/Theme";
-import Cauto from "../../assets/images/cauto.png";
-import Furtivo from "../../assets/images/furtivo.png";
-import Ingenioso from "../../assets/images/ingenioso.png";
-import Llamativo from "../../assets/images/llamativo.png";
-import Rapido from "../../assets/images/rapido.png";
-import Vigoroso from "../../assets/images/vigoroso.png";
+import StylesSlider from "../components/StylesSlider";
 import IconedButton from "../components/IconedButton";
+import { FontAwesome6 } from "@expo/vector-icons";
 export default function CreateCharacterScreen() {
   const initialValues = {
-    name: "",
-    description: "",
-    aspect1: "",
-    aspect2: "",
-    aspect3: "",
+    nombre: "",
+    descripcion: "",
+    aspectoPrincipal: "",
+    complicacion: "",
+    aspecto1: "",
+    aspecto2: "",
+    aspecto3: "",
     cauto: 0,
     furtivo: 0,
     ingenioso: 0,
@@ -31,10 +26,21 @@ export default function CreateCharacterScreen() {
     proeza3: "",
     proeza4: "",
     proeza5: "",
+    avatar: "",
+    stress1: false,
+    stress2: false,
+    stress3: false,
+    consecuencia2: "",
+    consecuencia4: "",
+    consecuencia6: "",
+    arecuperacion: 3,
+    puntosFate: 3,
   };
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("El nombre es requerido"),
-    description: Yup.string().required("La descripción es requerida"),
+    nombre: Yup.string().required("Campo requerido"),
+    descripcion: Yup.string().required("Campo requerido"),
+    aspectoPrincipal: Yup.string().required("Campo requerido"),
+    complicacion: Yup.string().required("Campo requerido"),
   });
 
   return (
@@ -46,142 +52,55 @@ export default function CreateCharacterScreen() {
       {(formikProps) => (
         <ScrollView>
           <BoxedTitle title="Identidad" />
+          <Pressable
+            style={{ alignSelf: "center" }}
+            onPress={() => console.log("agregar avatar")}
+          >
+            <FontAwesome6 name="circle-user" size={60} color="black" />
+          </Pressable>
           <Input
-            inputName="name"
+            inputName="nombre"
             formikProps={formikProps}
             placeholder={"Nombre"}
           />
           <Input
-            inputName="description"
+            inputName="descripcion"
             formikProps={formikProps}
             placeholder={"Descripción"}
           />
-
+          <Input
+            inputName="aspectoPrincipal"
+            formikProps={formikProps}
+            placeholder={"Aspecto Principal"}
+          />
+          <Input
+            inputName="complicacion"
+            formikProps={formikProps}
+            placeholder={"Complicación"}
+          />
           <BoxedTitle title="Aspectos" />
           <Input
-            inputName="aspect1"
+            inputName="aspecto1"
             formikProps={formikProps}
             placeholder={"Aspecto"}
           />
           <Input
-            inputName="aspect2"
+            inputName="aspecto2"
             formikProps={formikProps}
             placeholder={"Aspecto"}
           />
           <Input
-            inputName="aspect3"
+            inputName="aspecto3"
             formikProps={formikProps}
             placeholder={"Aspecto"}
           />
           <BoxedTitle title="Estilos" />
-          <View style={styles.slider}>
-            <Text style={styles.sliderLabel}>
-              Cauto: {formikProps.values.cauto}
-            </Text>
-            <Slider
-              style={{ width: 200, height: 20 }}
-              minimumValue={0}
-              step={1}
-              maximumValue={3}
-              thumbImage={Cauto}
-              minimumTrackTintColor={Theme.colors.success}
-              maximumTrackTintColor={Theme.colors.secondary}
-              value={formikProps.values.cauto}
-              onValueChange={(value) =>
-                formikProps.setFieldValue("cauto", value)
-              }
-            />
-          </View>
-          <View style={styles.slider}>
-            <Text style={styles.sliderLabel}>
-              Furtivo: {formikProps.values.furtivo}
-            </Text>
-            <Slider
-              style={{ width: 200, height: 40 }}
-              minimumValue={0}
-              step={1}
-              maximumValue={3}
-              thumbImage={Furtivo}
-              minimumTrackTintColor={Theme.colors.success}
-              maximumTrackTintColor={Theme.colors.secondary}
-              value={formikProps.values.furtivo}
-              onValueChange={(value) =>
-                formikProps.setFieldValue("furtivo", value)
-              }
-            />
-          </View>
-          <View style={styles.slider}>
-            <Text style={styles.sliderLabel}>
-              Ingenioso: {formikProps.values.ingenioso}
-            </Text>
-            <Slider
-              style={{ width: 200, height: 40 }}
-              minimumValue={0}
-              step={1}
-              maximumValue={3}
-              thumbImage={Ingenioso}
-              minimumTrackTintColor={Theme.colors.success}
-              maximumTrackTintColor={Theme.colors.secondary}
-              value={formikProps.values.ingenioso}
-              onValueChange={(value) =>
-                formikProps.setFieldValue("ingenioso", value)
-              }
-            />
-          </View>
-          <View style={styles.slider}>
-            <Text style={styles.sliderLabel}>
-              Llamativo: {formikProps.values.llamativo}
-            </Text>
-            <Slider
-              style={{ width: 200, height: 40 }}
-              minimumValue={0}
-              step={1}
-              maximumValue={3}
-              thumbImage={Llamativo}
-              minimumTrackTintColor={Theme.colors.success}
-              maximumTrackTintColor={Theme.colors.secondary}
-              value={formikProps.values.llamativo}
-              onValueChange={(value) =>
-                formikProps.setFieldValue("llamativo", value)
-              }
-            />
-          </View>
-          <View style={styles.slider}>
-            <Text style={styles.sliderLabel}>
-              Rápido: {formikProps.values.rapido}
-            </Text>
-            <Slider
-              style={{ width: 200, height: 40 }}
-              minimumValue={0}
-              step={1}
-              maximumValue={3}
-              thumbImage={Rapido}
-              minimumTrackTintColor={Theme.colors.success}
-              maximumTrackTintColor={Theme.colors.secondary}
-              value={formikProps.values.rapido}
-              onValueChange={(value) =>
-                formikProps.setFieldValue("rapido", value)
-              }
-            />
-          </View>
-          <View style={styles.slider}>
-            <Text style={styles.sliderLabel}>
-              Vigoroso: {formikProps.values.vigoroso}
-            </Text>
-            <Slider
-              style={{ width: 200, height: 40 }}
-              minimumValue={0}
-              step={1}
-              maximumValue={3}
-              thumbImage={Vigoroso}
-              minimumTrackTintColor={Theme.colors.success}
-              maximumTrackTintColor={Theme.colors.secondary}
-              value={formikProps.values.vigoroso}
-              onValueChange={(value) =>
-                formikProps.setFieldValue("vigoroso", value)
-              }
-            />
-          </View>
+          <StylesSlider formikProps={formikProps} inputName="cauto" />
+          <StylesSlider formikProps={formikProps} inputName="furtivo" />
+          <StylesSlider formikProps={formikProps} inputName="ingenioso" />
+          <StylesSlider formikProps={formikProps} inputName="llamativo" />
+          <StylesSlider formikProps={formikProps} inputName="rapido" />
+          <StylesSlider formikProps={formikProps} inputName="vigoroso" />
           <BoxedTitle title="Proezas" />
           <Input
             inputName="proeza1"
@@ -219,18 +138,3 @@ export default function CreateCharacterScreen() {
     </Formik>
   );
 }
-
-const styles = StyleSheet.create({
-  slider: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  sliderLabel: {
-    fontSize: Theme.fontSizes.md,
-    color: Theme.colors.secondary,
-    fontWeight: "bold",
-    margin: 10,
-  },
-});

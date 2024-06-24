@@ -18,13 +18,15 @@ export default Input = ({
             onBlur={handleBlur(inputName)}
             value={values[inputName]}
             style={styles.inputMultiLine}
-            placeholder={placeholder}
             multiline={true}
             numberOfLines={3}
           />
-          {touched[inputName] && errors[inputName] && (
-            <Text style={styles.errors}>{errors[inputName]}</Text>
-          )}
+          <View style={styles.subtitles}>
+            <Text style={styles.text}>{placeholder}</Text>
+            {touched[inputName] && errors[inputName] && (
+              <Text style={styles.errors}>{errors[inputName]}</Text>
+            )}
+          </View>
         </View>
       ) : (
         <View style={styles.container}>
@@ -33,11 +35,13 @@ export default Input = ({
             onBlur={handleBlur(inputName)}
             value={values[inputName]}
             style={styles.input}
-            placeholder={placeholder}
           />
-          {touched[inputName] && errors[inputName] && (
-            <Text style={styles.errors}>{errors[inputName]}</Text>
-          )}
+          <View style={styles.subtitles}>
+            <Text style={styles.text}>{placeholder}</Text>
+            {touched[inputName] && errors[inputName] && (
+              <Text style={styles.errors}>{errors[inputName]}</Text>
+            )}
+          </View>
         </View>
       )}
     </>
@@ -66,5 +70,14 @@ const styles = StyleSheet.create({
     color: Theme.colors.danger,
     fontSize: Theme.fontSizes.sm,
     marginHorizontal: 12,
+  },
+  text: {
+    color: Theme.colors.tertiary,
+    fontSize: Theme.fontSizes.sm,
+    marginHorizontal: 12,
+  },
+  subtitles: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
