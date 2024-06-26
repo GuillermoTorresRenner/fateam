@@ -8,7 +8,7 @@ export default function CharacterCard({ character, navigation, route }) {
      el ID del personaje para ser buscado en la pantalla de detalle mediante otro llamado a la Api*/
   return (
     <Pressable
-      onPress={() => navigation.navigate("characterDetail", character)}
+      onPress={() => navigation.navigate("CharacterDetailScreen", character)}
     >
       <View style={styles.card}>
         <Image source={{ uri: character.avatar }} style={styles.avatar} />

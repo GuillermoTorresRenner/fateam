@@ -12,7 +12,7 @@ import IconedButton from "../components/IconedButton";
 import TextCharacterProfile from "../components/TextCharacterProfile";
 import StylesChip from "../components/StylesChip";
 import Theme from "../theme/Theme";
-export default function CharacterDetail({ navigation, route }) {
+export default function CharacterDetailScreen({ navigation, route }) {
   const character = route.params;
   return (
     <ScrollView>

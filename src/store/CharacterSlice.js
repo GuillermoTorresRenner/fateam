@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-export const slice = createSlice({
-  name: "slice",
+export const characterSlice = createSlice({
+  name: "characterSlice",
   initialState: {
     value: 0,
   },
@@ -13,5 +13,5 @@ export const slice = createSlice({
     },
   },
 });
-export const { increment, decrement } = slice.actions;
-export default slice.reducer;
+export const { increment, decrement } = characterSlice.actions;
+export default characterSlice.reducer;

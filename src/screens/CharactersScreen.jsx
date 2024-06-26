@@ -14,7 +14,7 @@ const CharactersScreen = ({ navigation }) => {
           <CharacterCard character={item} navigation={navigation} />
         )}
       />
-      <Fab goto={"Crear Personaje"} navigation={navigation} />
+      <Fab goto={"CreateCharacterScreen"} navigation={navigation} />
     </View>
   );
 };

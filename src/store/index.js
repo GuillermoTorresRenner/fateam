@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import conterReducer from "./slice";
+import CharacterSlice from "./CharacterSlice";
 
 export default configureStore({
   reducer: {
-    counter: conterReducer,
+    counter: CharacterSlice,
   },
 });
