@@ -1,8 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import CharacterSlice from "./CharacterSlice";
 
-export default configureStore({
+import CharacterReducer from "../features/CharacterSlice";
+import CampaignReducer from "../features/CampaignSlice";
+import { characterApi } from "../services/characterServices";
+import { setupListeners } from "@reduxjs/toolkit/query";
+const store = configureStore({
   reducer: {
-    counter: CharacterSlice,
+    character: CharacterReducer,
+    campaign: CampaignReducer,
+    [characterApi.reducerPath]: characterApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(characterApi.middleware),
 });
+setupListeners(store.dispatch);
+export default store;

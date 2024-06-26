@@ -6,7 +6,9 @@ import Input from "../components/Input";
 import StylesSlider from "../components/StylesSlider";
 import IconedButton from "../components/IconedButton";
 import { FontAwesome6 } from "@expo/vector-icons";
+
 export default function CreateCharacterScreen() {
+  //Inicialización de los campos del formulario para usarlo con Formik
   const initialValues = {
     nombre: "",
     descripcion: "",

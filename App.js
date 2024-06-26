@@ -3,7 +3,7 @@ import { fonts } from "./src/theme/Theme";
 import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
 import store from "./src/store/";
-import { SafeAreaView, Platform, StatusBar, StyleSheet } from "react-native";
+import { SafeAreaView, Platform, StyleSheet } from "react-native";
 import Theme from "./src/theme/Theme";
 import Constant from "expo-constants";
 export default function App() {

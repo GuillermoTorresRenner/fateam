@@ -1,0 +1,9 @@
+Se implementa el State del store con Redux. 
+
+No encuentro caso de uso actualmente para poder utilizar dicha funcionalidad
+
+Sólo por temas de prueba se implementa el uso del store en el componente 
+Character Card y CampaignScreen
+-------------------------------------------
+
+Se implementa RTK para traer los personajes mockeados desde la realtime database

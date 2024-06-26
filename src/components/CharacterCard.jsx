@@ -2,14 +2,24 @@ import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import Theme from "../theme/Theme";
 import StylesChip from "./StylesChip";
+//importaciones para el store
+import { setCharacter } from "../features/CharacterSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CharacterCard({ character, navigation, route }) {
+  //constante para poder llamar a las funciones del store
+  const dispatch = useDispatch();
+
+  const handleCharacter = () => {
+    //Llamamos a la función del store para setear el personaje seleccionado
+    dispatch(setCharacter(character));
+    navigation.navigate("CharacterDetailScreen", character);
+  };
+
   /*Eventualmente cuando tenga conexión a la base de datos la manera de poder navegar será enviando
      el ID del personaje para ser buscado en la pantalla de detalle mediante otro llamado a la Api*/
   return (
-    <Pressable
-      onPress={() => navigation.navigate("CharacterDetailScreen", character)}
-    >
+    <Pressable onPress={handleCharacter}>
       <View style={styles.card}>
         <Image source={{ uri: character.avatar }} style={styles.avatar} />
         <Text style={styles.title}>{character.nombre}</Text>
