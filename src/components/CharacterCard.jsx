@@ -3,7 +3,7 @@ import React from "react";
 import Theme from "../theme/Theme";
 import StylesChip from "./StylesChip";
 //importaciones para el store
-import { setCharacter } from "../features/CharacterSlice";
+import { addCharacter } from "../features/CharacterSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function CharacterCard({ character, navigation, route }) {
@@ -12,7 +12,7 @@ export default function CharacterCard({ character, navigation, route }) {
 
   const handleCharacter = () => {
     //Llamamos a la función del store para setear el personaje seleccionado
-    dispatch(setCharacter(character));
+    dispatch(addCharacter(character));
     navigation.navigate("CharacterDetailScreen", character);
   };
 

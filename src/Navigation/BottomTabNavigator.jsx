@@ -8,6 +8,7 @@ import CampaignStackNavigator from "./CampaignStackNavigator";
 import DiceStackNavigator from "./DiceStackNavigator";
 import NotesStackNavigator from "./NotesStackNavigator";
 import Header from "../components/Header";
+import MyProfileStackNavigator from "./MyProfileStackNavigator";
 
 const Tab = createBottomTabNavigator();
 export default function BottomTabNavigator() {
@@ -52,6 +53,15 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome5 name="pencil-alt" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={MyProfileStackNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="user-alt" size={24} color={color} />
           ),
         }}
       />

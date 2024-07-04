@@ -6,8 +6,15 @@ import Input from "../components/Input";
 import StylesSlider from "../components/StylesSlider";
 import IconedButton from "../components/IconedButton";
 import { FontAwesome6 } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { addCharacter } from "../features/CharacterSlice";
+import { usePostChararacterMutation } from "../services/characterServices";
 
 export default function CreateCharacterScreen() {
+  //inicialización del dispatch para usarlo con Redux
+  const dispatch = useDispatch();
+  //inicialización de la mutación para usarla con RTK Query
+  const [trigger] = usePostChararacterMutation();
   //Inicialización de los campos del formulario para usarlo con Formik
   const initialValues = {
     nombre: "",
@@ -45,10 +52,17 @@ export default function CreateCharacterScreen() {
     complicacion: Yup.string().required("Campo requerido"),
   });
 
+  const handleSubmit = (values) => {
+    //dispatch de la acción addCharacter con los valores del formulario
+    dispatch(addCharacter(values));
+    //llamada a la mutación para enviar los datos a la base de datos
+    trigger(values);
+  };
+
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
       {(formikProps) => (

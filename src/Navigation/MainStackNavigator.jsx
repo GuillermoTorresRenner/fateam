@@ -13,9 +13,6 @@ export default function MainStackNavigator() {
       initialRouteName="Personajes"
       screenOptions={{ headerShown: false }}
     >
-      {/* //Volver a habilitar estas pantanllas CUANDO VEAMOS LOGIN Y REGISTER */}
-      {/* <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} /> */}
       <Stack.Screen
         name="CharacterStackNavigator"
         component={CharacterStackNavigator}

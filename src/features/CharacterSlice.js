@@ -6,10 +6,10 @@ export const characterSlice = createSlice({
     character: {},
   },
   reducers: {
-    setCharacter: (state, action) => {
+    addCharacter: (state, action) => {
       state.character = action.payload;
     },
   },
 });
-export const { setCharacter } = characterSlice.actions;
+export const { addCharacter } = characterSlice.actions;
 export default characterSlice.reducer;

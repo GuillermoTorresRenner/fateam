@@ -1,23 +1,38 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Pressable,
-} from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import Input from "../components/Input";
 import Logo from "../../assets/images/Logo.png";
 import { StatusBar } from "expo-status-bar";
 import theme from "../theme/Theme";
-export default LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { setUser } from "../features/UserSlice";
+import { useLoginMutation } from "../services/authService";
+import { useDispatch } from "react-redux";
 
-  const handleSubmit = () => {
-    console.log("Email: ", email, " Password: ", password);
-    navigation.navigate("Tabs");
+export default LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const [triggerLogin, result] = useLoginMutation();
+  useEffect(() => {
+    if (result.isSuccess) {
+      dispatch(setUser(result.data));
+    }
+  }, [result.isSuccess]);
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("Email inválido").required("Campo requerido"),
+    password: Yup.string().required("Campo requerido"),
+  });
+
+  const handleSubmit = (values) => {
+    triggerLogin({
+      email: values.email,
+      password: values.password,
+      returnSecureToken: true,
+    });
   };
 
   return (
@@ -29,54 +44,44 @@ export default LoginScreen = ({ navigation }) => {
       <Text style={styles.text}>Iniciar Sesión</Text>
       <Text style={styles.text2}>ingresa tus credenciales</Text>
 
-      <View style={{ marginBottom: 60, gap: 10, paddingHorizontal: 20 }}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Ingrese su Email"
-            style={styles.input}
-            placeholderTextColor="grey"
-            onChangeText={setEmail}
-            value={email}
-          />
-          <TextInput
-            placeholder="Ingrese su Password"
-            style={styles.input}
-            placeholderTextColor="grey"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-          />
-        </View>
-        <Pressable onPress={handleSubmit}>
-          <View style={styles.btn}>
-            <Text style={{ color: theme.colors.white, marginHorizontal: 5 }}>
-              Continuar
-            </Text>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
+        {(formikProps) => (
+          <View>
+            <Input
+              inputName="email"
+              formikProps={formikProps}
+              placeholder={"Email"}
+            />
+            <Input
+              inputName="password"
+              formikProps={formikProps}
+              placeholder={"Password"}
+            />
+
+            <View style={styles.btnContainer}>
+              <Pressable onPress={formikProps.handleSubmit}>
+                <View style={styles.btn}>
+                  <Text
+                    style={{
+                      color: theme.colors.white,
+                      marginHorizontal: 5,
+                    }}
+                  >
+                    Continuar
+                  </Text>
+                </View>
+              </Pressable>
+              <Pressable onPress={() => navigation.navigate("Register")}>
+                <Text style={styles.register}>Crea una cuenta</Text>
+              </Pressable>
+            </View>
           </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate("Register")}>
-          <Text
-            style={{
-              color: theme.colors.primary,
-              marginHorizontal: 5,
-              textAlign: "right",
-              marginTop: 2,
-              marginBottom: 10,
-              paddingRight: 30,
-            }}
-          >
-            Crea una cuenta
-          </Text>
-        </Pressable>
-        <Pressable onPress={handleSubmit}>
-          <View style={styles.btn}>
-            <AntDesign name="google" size={24} color={Theme.colors.white} />
-            <Text style={{ color: theme.colors.white, marginHorizontal: 5 }}>
-              Continuar con google
-            </Text>
-          </View>
-        </Pressable>
-      </View>
+        )}
+      </Formik>
     </View>
   );
 };
@@ -84,7 +89,9 @@ export default LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "center",
+    gap: 20,
+    paddingHorizontal: "5%",
   },
   logoContainer: {
     alignItems: "center",
@@ -98,28 +105,16 @@ const styles = StyleSheet.create({
   text: {
     color: theme.colors.primary,
     fontFamily: "title_bold",
-    fontSize: theme.fontSizes.md,
+    fontSize: theme.fontSizes.xl,
     textAlign: "center",
   },
   text2: {
     color: theme.colors.secondary,
-    fontFamily: "title",
-    fontSize: theme.fontSizes.sm,
+    fontFamily: "title_bold",
+    fontSize: theme.fontSizes.md,
     textAlign: "center",
   },
 
-  inputContainer: {
-    justifyContent: "center",
-    marginBottom: 30,
-  },
-  input: {
-    padding: 10,
-    marginTop: 10,
-    color: theme.colors.light,
-
-    borderWidth: 1,
-    borderColor: theme.colors.secondary,
-  },
   btn: {
     flexDirection: "row",
     alignSelf: "center",
@@ -135,5 +130,18 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+    marginBottom: 30,
+  },
+  register: {
+    color: theme.colors.primary,
+    marginHorizontal: 5,
+    textAlign: "right",
+    marginTop: 2,
+
+    paddingRight: 30,
+  },
+  btnContainer: {
+    justifyContent: "space-between",
+    marginTop: 30,
   },
 });

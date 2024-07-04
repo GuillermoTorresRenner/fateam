@@ -1,22 +1,40 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Pressable,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import Input from "../components/Input";
 import Logo from "../../assets/images/Logo.png";
 import { StatusBar } from "expo-status-bar";
 import theme from "../theme/Theme";
-export default RegisterScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { useRegisterMutation } from "../services/authService";
 
-  const handleSubmit = () => {
-    console.log("Email: ", email, " Password: ", password);
-    navigation.goBack();
+export default RegisterScreen = ({ navigation }) => {
+  const [triggerRegister, result] = useRegisterMutation();
+  useEffect(() => {
+    if (result.isSuccess) {
+      navigation.navigate("Login");
+    }
+  }, [result.isSuccess, navigation]);
+
+  const initialValues = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("Email inválido").required("Campo requerido"),
+    password: Yup.string().required("Campo requerido"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Las contraseñas no coinciden")
+      .required("Campo requerido"),
+  });
+
+  const handleSubmit = (values) => {
+    triggerRegister({
+      email: values.email,
+      password: values.password,
+      returnSecureToken: true,
+    });
   };
 
   return (
@@ -25,59 +43,52 @@ export default RegisterScreen = ({ navigation }) => {
       <View style={styles.logoContainer}>
         <Image source={Logo} style={styles.logo} />
       </View>
-      <Text style={styles.text}>Crea una cuenta</Text>
-      <Text style={styles.text2}>ingresa tus datos</Text>
+      <Text style={styles.text}>Registro de Usuario</Text>
+      <Text style={styles.text2}>ingresa tus credenciales</Text>
 
-      <View style={{ marginBottom: 60, gap: 10, paddingHorizontal: 20 }}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Ingrese su Nombre"
-            style={styles.input}
-            placeholderTextColor="grey"
-            onChangeText={setEmail}
-            value={email}
-          />
-          <TextInput
-            placeholder="Ingrese su Apellido"
-            style={styles.input}
-            placeholderTextColor="grey"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-          />
-          <TextInput
-            placeholder="Ingrese su Email"
-            style={styles.input}
-            placeholderTextColor="grey"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-          />
-          <TextInput
-            placeholder="Ingrese su Password"
-            style={styles.input}
-            placeholderTextColor="grey"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-          />
-          <TextInput
-            placeholder="Repita su Password"
-            style={styles.input}
-            placeholderTextColor="grey"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-          />
-        </View>
-        <Pressable onPress={handleSubmit}>
-          <View style={styles.btn}>
-            <Text style={{ color: Theme.colors.white, marginHorizontal: 5 }}>
-              Continuar
-            </Text>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
+        {(formikProps) => (
+          <View>
+            <Input
+              inputName="email"
+              formikProps={formikProps}
+              placeholder={"Email"}
+            />
+            <Input
+              inputName="password"
+              formikProps={formikProps}
+              placeholder={"Password"}
+            />
+            <Input
+              inputName="confirmPassword"
+              formikProps={formikProps}
+              placeholder={"Confirma tu Password"}
+            />
+
+            <View style={styles.btnContainer}>
+              <Pressable onPress={formikProps.handleSubmit}>
+                <View style={styles.btn}>
+                  <Text
+                    style={{
+                      color: theme.colors.white,
+                      marginHorizontal: 5,
+                    }}
+                  >
+                    Continuar
+                  </Text>
+                </View>
+              </Pressable>
+              <Pressable onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.register}>Volver al Login</Text>
+              </Pressable>
+            </View>
           </View>
-        </Pressable>
-      </View>
+        )}
+      </Formik>
     </View>
   );
 };
@@ -85,7 +96,9 @@ export default RegisterScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "center",
+    gap: 20,
+    paddingHorizontal: "5%",
   },
   logoContainer: {
     alignItems: "center",
@@ -99,32 +112,16 @@ const styles = StyleSheet.create({
   text: {
     color: theme.colors.primary,
     fontFamily: "title_bold",
-    fontSize: theme.fontSizes.md,
+    fontSize: theme.fontSizes.xl,
     textAlign: "center",
   },
   text2: {
     color: theme.colors.secondary,
-    fontFamily: "title",
-    fontSize: theme.fontSizes.sm,
-    textAlign: "center",
-  },
-  btnText: {
-    color: theme.colors.light,
+    fontFamily: "title_bold",
+    fontSize: theme.fontSizes.md,
     textAlign: "center",
   },
 
-  inputContainer: {
-    justifyContent: "center",
-    marginBottom: 30,
-  },
-  input: {
-    padding: 10,
-    marginTop: 10,
-    color: theme.colors.light,
-
-    borderWidth: 1,
-    borderColor: theme.colors.secondary,
-  },
   btn: {
     flexDirection: "row",
     alignSelf: "center",
@@ -134,10 +131,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "80%",
+    height: 35,
     shadowColor: theme.colors.primary,
     shadowOffset: {
       width: 0,
       height: 2,
     },
+    marginBottom: 30,
+  },
+  register: {
+    color: theme.colors.primary,
+    marginHorizontal: 5,
+    textAlign: "right",
+    marginTop: 2,
+
+    paddingRight: 30,
+  },
+  btnContainer: {
+    justifyContent: "space-between",
+    marginTop: 30,
   },
 });

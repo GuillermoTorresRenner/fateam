@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../databases/realtimeDataBase";
 
 export const characterApi = createApi({
+  reducerPath: "characterApi",
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
     getCharacters: builder.query({
@@ -17,7 +18,15 @@ export const characterApi = createApi({
         return transformedResponse;
       },
     }),
+    postChararacter: builder.mutation({
+      query: ({ ...character }) => ({
+        url: `characters.json`,
+        method: "POST",
+        body: character,
+      }),
+    }),
   }),
 });
 
-export const { useGetCharactersQuery } = characterApi;
+export const { useGetCharactersQuery, usePostChararacterMutation } =
+  characterApi;

@@ -7,6 +7,7 @@ import { SafeAreaView, Platform, StyleSheet } from "react-native";
 import Theme from "./src/theme/Theme";
 import Constant from "expo-constants";
 export default function App() {
+  //Leemos el estado del user desde el store
   const [fontsLoaded] = useFonts(fonts);
   if (!fontsLoaded) {
     return null;

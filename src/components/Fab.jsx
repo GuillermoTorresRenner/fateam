@@ -1,16 +1,13 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import theme from "../theme/Theme";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Fab({ navigation, goto }) {
   return (
-    <TouchableOpacity
-      style={styles.fab}
-      onPress={() => navigation.navigate(goto)}
-    >
+    <Pressable style={styles.fab} onPress={() => navigation.navigate(goto)}>
       <Icon name="plus" color="white" size={20} />
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
