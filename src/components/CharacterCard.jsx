@@ -2,26 +2,21 @@ import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import Theme from "../theme/Theme";
 import StylesChip from "./StylesChip";
-//importaciones para el store
-import { addCharacter } from "../features/CharacterSlice";
-import { useDispatch, useSelector } from "react-redux";
+import defaulImage from "../../assets/images/user.png";
 
-export default function CharacterCard({ character, navigation, route }) {
-  //constante para poder llamar a las funciones del store
-  const dispatch = useDispatch();
-
+export default function CharacterCard({ character, navigation }) {
   const handleCharacter = () => {
-    //Llamamos a la función del store para setear el personaje seleccionado
-    dispatch(addCharacter(character));
     navigation.navigate("CharacterDetailScreen", character);
   };
 
-  /*Eventualmente cuando tenga conexión a la base de datos la manera de poder navegar será enviando
-     el ID del personaje para ser buscado en la pantalla de detalle mediante otro llamado a la Api*/
   return (
     <Pressable onPress={handleCharacter}>
       <View style={styles.card}>
-        <Image source={{ uri: character.avatar }} style={styles.avatar} />
+        {character.avatar === "" ? (
+          <Image source={defaulImage} style={styles.avatar} />
+        ) : (
+          <Image source={{ uri: character.avatar }} style={styles.avatar} />
+        )}
         <Text style={styles.title}>{character.nombre}</Text>
         <Text style={styles.description}>{character.descripcion}</Text>
         <View style={styles.stylesBar}>
@@ -64,7 +59,6 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     alignSelf: "center",
-    objectFit: "contain",
   },
 
   stylesBar: {

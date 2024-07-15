@@ -2,9 +2,13 @@ import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import Theme from "../theme/Theme";
+import { useDispatch, useSelector } from "react-redux";
+import { setImage } from "../features/ImageSlice";
 
-export default function ImageSelectorScreen() {
-  const [image, setImage] = useState(null);
+export default function ImageSelectorScreen({ navigation }) {
+  // const [image, setImage] = useState(null);
+  const image = useSelector((state) => state.image.image);
+  const dispatch = useDispatch();
   const verifyCameraPermissions = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
@@ -12,48 +16,80 @@ export default function ImageSelectorScreen() {
     }
     return true;
   };
-  const pickImage = async () => {
+  const pickImage = async (imageSource = "camera") => {
     const isCameraOk = await verifyCameraPermissions();
     if (isCameraOk) {
-      // launchLibraryAsync;
-      let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        base64: true,
-        quality: 0.2,
-      });
+      let result;
+      if (imageSource === "camera") {
+        result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          base64: true,
+          quality: 0.2,
+        });
+      }
+      if (imageSource === "library") {
+        result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          base64: true,
+          quality: 0.2,
+        });
+      }
+
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        setImage(`data:image/jpeg;base64,${result.assets[0].base64}`);
+        // setImage(`data:image/jpeg;base64,${result.assets[0].base64}`);
+        dispatch(
+          setImage({
+            image: `data:image/jpeg;base64,${result.assets[0].base64}`,
+          })
+        );
       }
     }
   };
 
-  const confirmImage = async () => {};
+  const confirmImage = async () => {
+    navigation.goBack();
+  };
   return (
     <View style={styles.container}>
       {!image ? (
         <View>
           <Image
             resizeMode="contain"
-            style={{ width: 200, height: 200 }}
+            style={styles.avatar}
             source={require("../../assets/images/user.png")}
           />
-          <Pressable onPress={pickImage} style={styles.btn}>
-            <Text style={styles.btnText}>Tomar Foto</Text>
-          </Pressable>
+          <View style={{ marginVertical: 20 }}>
+            <Pressable onPress={() => pickImage("camera")} style={styles.btn}>
+              <Text style={styles.btnText}>Tomar Foto</Text>
+            </Pressable>
+            <Pressable onPress={() => pickImage("library")} style={styles.btn}>
+              <Text style={styles.btnText}>Seleccionar de la Galería</Text>
+            </Pressable>
+          </View>
         </View>
       ) : (
         <View>
           <Image
             resizeMode="contain"
-            style={{ width: 200, height: 200 }}
+            style={styles.avatar}
             source={{ uri: image }}
           />
-          <Pressable onPress={pickImage} style={styles.btn}>
-            <Text style={styles.btnText}>Tomar Foto</Text>
-          </Pressable>
-          <Pressable onPress={confirmImage} style={styles.btn}>
+          <View style={{ marginVertical: 20 }}>
+            <Pressable onPress={() => pickImage("camera")} style={styles.btn}>
+              <Text style={styles.btnText}>Tomar Foto</Text>
+            </Pressable>
+            <Pressable onPress={() => pickImage("library")} style={styles.btn}>
+              <Text style={styles.btnText}>Seleccionar de la Galería</Text>
+            </Pressable>
+          </View>
+          <Pressable
+            onPress={confirmImage}
+            style={{ ...styles.btn, backgroundColor: Theme.colors.success }}
+          >
             <Text style={styles.btnText}>Confirmar Foto</Text>
           </Pressable>
         </View>
@@ -78,5 +114,11 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     textTransform: "uppercase",
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: "center",
   },
 });

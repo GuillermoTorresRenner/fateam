@@ -12,11 +12,16 @@ import IconedButton from "../components/IconedButton";
 import TextCharacterProfile from "../components/TextCharacterProfile";
 import StylesChip from "../components/StylesChip";
 import Theme from "../theme/Theme";
+import defaultImage from "../../assets/images/user.png";
 export default function CharacterDetailScreen({ navigation, route }) {
   const character = route.params;
   return (
     <ScrollView>
-      <Image source={{ uri: character.avatar }} style={styles.avatar} />
+      {character.avatar === "" ? (
+        <Image source={defaultImage} style={styles.avatar} />
+      ) : (
+        <Image source={{ uri: character.avatar }} style={styles.avatar} />
+      )}
       {/* IDENTIDAD */}
       <BoxedTitle title="Identidad" />
       <TextCharacterProfile

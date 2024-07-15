@@ -56,7 +56,7 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Profile"
         component={MyProfileStackNavigator}
         options={{
@@ -64,7 +64,7 @@ export default function BottomTabNavigator() {
             <FontAwesome5 name="user-alt" size={24} color={color} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

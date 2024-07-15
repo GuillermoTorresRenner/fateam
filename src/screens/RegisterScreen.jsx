@@ -22,7 +22,10 @@ export default RegisterScreen = ({ navigation }) => {
     confirmPassword: "",
   };
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Email inválido").required("Campo requerido"),
+    email: Yup.string()
+      .email("Email inválido")
+      .required("Campo requerido")
+      .lowercase(),
     password: Yup.string().required("Campo requerido"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Las contraseñas no coinciden")

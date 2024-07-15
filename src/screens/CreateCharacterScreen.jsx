@@ -1,21 +1,20 @@
-import { Pressable, ScrollView } from "react-native";
+import { Pressable, ScrollView, Image, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import BoxedTitle from "../components/BoxedTitle";
 import Input from "../components/Input";
 import StylesSlider from "../components/StylesSlider";
 import IconedButton from "../components/IconedButton";
-import { FontAwesome6 } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCharacter } from "../features/CharacterSlice";
 import { usePostChararacterMutation } from "../services/characterServices";
+import addImage from "../../assets/images/addImage.png";
 
-export default function CreateCharacterScreen() {
-  //inicialización del dispatch para usarlo con Redux
+export default function CreateCharacterScreen({ navigation }) {
   const dispatch = useDispatch();
-  //inicialización de la mutación para usarla con RTK Query
+  const ownerId = useSelector((state) => state.user.value.userId);
+  const image = useSelector((state) => state.image.image);
   const [trigger] = usePostChararacterMutation();
-  //Inicialización de los campos del formulario para usarlo con Formik
   const initialValues = {
     nombre: "",
     descripcion: "",
@@ -35,14 +34,14 @@ export default function CreateCharacterScreen() {
     proeza3: "",
     proeza4: "",
     proeza5: "",
-    avatar: "",
+    avatar: null,
     stress1: false,
     stress2: false,
     stress3: false,
     consecuencia2: "",
     consecuencia4: "",
     consecuencia6: "",
-    arecuperacion: 3,
+    recuperacion: 3,
     puntosFate: 3,
   };
   const validationSchema = Yup.object().shape({
@@ -54,9 +53,9 @@ export default function CreateCharacterScreen() {
 
   const handleSubmit = (values) => {
     //dispatch de la acción addCharacter con los valores del formulario
-    dispatch(addCharacter(values));
+    dispatch(addCharacter({ ...values, ownerId }));
     //llamada a la mutación para enviar los datos a la base de datos
-    trigger(values);
+    trigger({ ...values, ownerId, avatar: image });
   };
 
   return (
@@ -68,12 +67,29 @@ export default function CreateCharacterScreen() {
       {(formikProps) => (
         <ScrollView>
           <BoxedTitle title="Identidad" />
+          {/* -------- */}
           <Pressable
-            style={{ alignSelf: "center" }}
-            onPress={() => console.log("agregar avatar")}
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.5 : 1,
+            })}
+            onPress={() => navigation.navigate("ImageSelectorScreen")}
           >
-            <FontAwesome6 name="circle-user" size={60} color="black" />
+            {image ? (
+              <Image
+                source={{ uri: image }}
+                style={styles.avatar}
+                resizeMode="cover"
+              />
+            ) : (
+              <Image
+                source={addImage}
+                style={styles.avatar}
+                resizeMode="cover"
+              />
+            )}
           </Pressable>
+
+          {/* ------------- */}
           <Input
             inputName="nombre"
             formikProps={formikProps}
@@ -154,3 +170,12 @@ export default function CreateCharacterScreen() {
     </Formik>
   );
 }
+const styles = StyleSheet.create({
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: "center",
+    marginBottom: 20,
+  },
+});

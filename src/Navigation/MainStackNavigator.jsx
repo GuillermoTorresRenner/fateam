@@ -4,6 +4,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import CreateCharacterScreen from "../screens/CreateCharacterScreen";
 import CharacterDetailScreen from "../screens/CharacterDetailScreen";
 import CharacterStackNavigator from "./CharacterStackNavigator";
+import ImageSelectorScreen from "../screens/ImageSelectorScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,10 @@ export default function MainStackNavigator() {
       <Stack.Screen
         name="CharacterDetailScreen"
         component={CharacterDetailScreen}
+      />
+      <Stack.Screen
+        name="ImageSelectorScreen"
+        component={ImageSelectorScreen}
       />
     </Stack.Navigator>
   );

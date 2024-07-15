@@ -20,6 +20,11 @@ export default Input = ({
             style={styles.inputMultiLine}
             multiline={true}
             numberOfLines={3}
+            secureTextEntry={
+              inputName === "password" || inputName === "confirmPassword"
+                ? true
+                : false
+            }
           />
           <View style={styles.subtitles}>
             <Text style={styles.text}>{placeholder}</Text>
@@ -35,6 +40,11 @@ export default Input = ({
             onBlur={handleBlur(inputName)}
             value={values[inputName]}
             style={styles.input}
+            secureTextEntry={
+              inputName === "password" || inputName === "confirmPassword"
+                ? true
+                : false
+            }
           />
           <View style={styles.subtitles}>
             <Text style={styles.text}>{placeholder}</Text>

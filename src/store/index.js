@@ -1,16 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
-
+import { setupListeners } from "@reduxjs/toolkit/query";
 import CharacterReducer from "../features/CharacterSlice";
 import CampaignReducer from "../features/CampaignSlice";
+import ImageReducer from "../features/ImageSlice";
 import { characterApi } from "../services/characterServices";
-import { setupListeners } from "@reduxjs/toolkit/query";
 import UserReducer from "../features/UserSlice";
 import { authApi } from "../services/authService";
 const store = configureStore({
   reducer: {
+    //config de slices
     character: CharacterReducer,
     campaign: CampaignReducer,
     user: UserReducer,
+    image: ImageReducer,
+    //Config de Apis
     [characterApi.reducerPath]: characterApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
   },

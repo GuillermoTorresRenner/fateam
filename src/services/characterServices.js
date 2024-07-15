@@ -5,18 +5,15 @@ export const characterApi = createApi({
   reducerPath: "characterApi",
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
-    getCharacters: builder.query({
-      query: () => `characters.json`,
-      transformErrorResponse: (response) => {
-        /*
-        Se usa esta función para transformar la respuesta de firebase que organiza los elementos como:
-        [0:{},
-        1:{},
-        2:{},]
-        */
+    getCharactersByUserId: builder.query({
+      query: (ownerId) =>
+        `characters.json?orderBy="ownerId"&equalTo="${ownerId}"`,
+      transformResponse: (response) => {
         const transformedResponse = Object.values(response);
+
         return transformedResponse;
       },
+      keepUnusedDataFor: 0,
     }),
     postChararacter: builder.mutation({
       query: ({ ...character }) => ({
@@ -28,5 +25,5 @@ export const characterApi = createApi({
   }),
 });
 
-export const { useGetCharactersQuery, usePostChararacterMutation } =
+export const { useGetCharactersByUserIdQuery, usePostChararacterMutation } =
   characterApi;

@@ -9,21 +9,33 @@ import theme from "../theme/Theme";
 import { setUser } from "../features/UserSlice";
 import { useLoginMutation } from "../services/authService";
 import { useDispatch } from "react-redux";
+import { insertSession } from "../persistence";
 
 export default LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [triggerLogin, result] = useLoginMutation();
   useEffect(() => {
-    if (result.isSuccess) {
+    if (result?.data && result.isSuccess) {
+      (async () => {
+        await insertSession({
+          userId: result.data.localId,
+          email: result.data.email,
+          token: result.data.idToken,
+        });
+      })();
       dispatch(setUser(result.data));
     }
   }, [result.isSuccess]);
+
   const initialValues = {
     email: "",
     password: "",
   };
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Email inválido").required("Campo requerido"),
+    email: Yup.string()
+      .email("Email inválido")
+      .required("Campo requerido")
+      .lowercase(),
     password: Yup.string().required("Campo requerido"),
   });
 

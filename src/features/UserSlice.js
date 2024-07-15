@@ -6,21 +6,21 @@ export const userSlice = createSlice({
     value: {
       user: null,
       token: null,
+      userId: null,
     },
   },
   reducers: {
     setUser: (state, { payload }) => {
       state.value.user = payload.email;
-      state.value.token = payload.idToken;
+      state.value.token = payload.token;
+      state.value.userId = payload.userId;
     },
     clearUser: (state) => {
       state.value.user = null;
       state.value.token = null;
-    },
-    setCameraImage: (state, { payload }) => {
-      state.cameraImage = payload;
+      state.value.userId = null;
     },
   },
 });
-export const { setUser, clearUser, setCameraImage } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;
