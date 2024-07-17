@@ -1,12 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CampaignsScreen from "../screens/CampaignsScreen";
+import RulesScreen from "../screens/RulesScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default CampaignStackNavigator = () => {
+export default RulesStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="CampaignsScreen" component={CampaignsScreen} />
+      <Stack.Screen name="RulesScreen" component={RulesScreen} />
     </Stack.Navigator>
   );
 };

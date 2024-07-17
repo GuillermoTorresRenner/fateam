@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setUser } from "../features/UserSlice";
 import { getSession } from "../persistence";
+import MainStackNavigator from "./MainStackNavigator";
 
 const Navigator = () => {
   const user = useSelector((state) => state.user.value);
@@ -22,7 +23,8 @@ const Navigator = () => {
 
   return (
     <NavigationContainer>
-      {user ? <BottomTabNavigator /> : <AuthStackNavigator />}
+      {/* {user ? <BottomTabNavigator /> : <AuthStackNavigator />} */}
+      {user ? <MainStackNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   );
 };

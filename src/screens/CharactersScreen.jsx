@@ -22,7 +22,6 @@ const CharactersScreen = ({ navigation }) => {
         data={data}
         renderItem={({ item }) => (
           <CharacterCard character={item} navigation={navigation} />
-          // <Text>{item.descripcion}</Text>
         )}
       />
       <Fab goto={"CreateCharacterScreen"} navigation={navigation} />

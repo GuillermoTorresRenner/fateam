@@ -13,8 +13,9 @@ import TextCharacterProfile from "../components/TextCharacterProfile";
 import StylesChip from "../components/StylesChip";
 import Theme from "../theme/Theme";
 import defaultImage from "../../assets/images/user.png";
+import { useSelector } from "react-redux";
 export default function CharacterDetailScreen({ navigation, route }) {
-  const character = route.params;
+  const character = useSelector((state) => state.character.character);
   return (
     <ScrollView>
       {character.avatar === "" ? (

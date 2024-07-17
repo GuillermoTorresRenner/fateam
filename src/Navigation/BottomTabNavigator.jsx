@@ -2,44 +2,43 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import Theme from "../theme/Theme";
-import MainStackNavigator from "./MainStackNavigator";
-import CampaignStackNavigator from "./CampaignStackNavigator";
 import DiceStackNavigator from "./DiceStackNavigator";
 import NotesStackNavigator from "./NotesStackNavigator";
 import Header from "../components/Header";
-import MyProfileStackNavigator from "./MyProfileStackNavigator";
+import RulesStackNavigator from "./RulesStackNavigator";
+import CharacterDetailStackNavigator from "./CharacterDetailStackNavigator";
 
 const Tab = createBottomTabNavigator();
 export default function BottomTabNavigator() {
   return (
     <Tab.Navigator
       //agregar un header componentizado custom
-      initialRouteName="Personajes"
+      initialRouteName="Ficha"
       screenOptions={({ route }) => ({
         header: () => <Header title={route.name} />,
       })}
     >
-      <Tab.Screen
-        name="Personajes"
+      {/* <Tab.Screen
+        name="Ficha"
         component={MainStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome name="id-card" size={24} color={color} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
-        name="Campañas"
-        component={CampaignStackNavigator}
+        name="Ficha de Personaje"
+        component={CharacterDetailStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="compass" size={24} color={color} />
+            <FontAwesome name="id-card" size={24} color={color} />
           ),
         }}
       />
+
       <Tab.Screen
-        name="Dados"
+        name="Tiradas"
         component={DiceStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -65,6 +64,16 @@ export default function BottomTabNavigator() {
           ),
         }}
       /> */}
+
+      <Tab.Screen
+        name="Reglas"
+        component={RulesStackNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="book" size={24} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }

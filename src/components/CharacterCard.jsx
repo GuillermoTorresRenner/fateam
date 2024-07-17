@@ -3,10 +3,15 @@ import React from "react";
 import Theme from "../theme/Theme";
 import StylesChip from "./StylesChip";
 import defaulImage from "../../assets/images/user.png";
+import { useDispatch } from "react-redux";
+import { setCharacter } from "../features/CharacterSlice";
 
 export default function CharacterCard({ character, navigation }) {
+  const dispatch = useDispatch();
   const handleCharacter = () => {
-    navigation.navigate("CharacterDetailScreen", character);
+    //guardar personaje en store
+    dispatch(setCharacter(character));
+    navigation.navigate("playScreen");
   };
 
   return (
