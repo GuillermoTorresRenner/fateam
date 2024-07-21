@@ -7,45 +7,47 @@ import StylesSlider from "../components/StylesSlider";
 import IconedButton from "../components/IconedButton";
 import { useDispatch, useSelector } from "react-redux";
 import { setCharacter } from "../features/CharacterSlice";
-import { usePostChararacterMutation } from "../services/characterServices";
+import { useUpdateCharacterMutation } from "../services/characterServices";
 import addImage from "../../assets/images/addImage.png";
 import InfoAlert from "../components/InfoAlert";
-import uuid from "react-native-uuid";
 import { clearImage } from "../features/ImageSlice";
 
-export default function CreateCharacterScreen({ navigation }) {
+export default function EditCharacterScreen({ navigation }) {
   const dispatch = useDispatch();
   const ownerId = useSelector((state) => state.user.value.userId);
   const image = useSelector((state) => state.image.image);
-  const [trigger] = usePostChararacterMutation();
+  const character = useSelector((state) => state.character.character);
+  const [trigger] = useUpdateCharacterMutation();
   const initialValues = {
-    nombre: "",
-    descripcion: "",
-    aspectoPrincipal: "",
-    complicacion: "",
-    aspecto1: "",
-    aspecto2: "",
-    aspecto3: "",
-    cauto: 0,
-    furtivo: 0,
-    ingenioso: 0,
-    llamativo: 0,
-    rapido: 0,
-    vigoroso: 0,
-    proeza1: "",
-    proeza2: "",
-    proeza3: "",
-    proeza4: "",
-    proeza5: "",
-    avatar: null,
-    stress1: false,
-    stress2: false,
-    stress3: false,
-    consecuencia2: "",
-    consecuencia4: "",
-    consecuencia6: "",
-    recuperacion: 3,
-    puntosFate: 3,
+    id: character.id,
+    ownerId: ownerId,
+    nombre: character.nombre,
+    descripcion: character.descripcion,
+    aspectoPrincipal: character.aspectoPrincipal,
+    complicacion: character.complicacion,
+    aspecto1: character.aspecto1,
+    aspecto2: character.aspecto2,
+    aspecto3: character.aspecto3,
+    cauto: character.cauto,
+    furtivo: character.furtivo,
+    ingenioso: character.ingenioso,
+    llamativo: character.llamativo,
+    rapido: character.rapido,
+    vigoroso: character.vigoroso,
+    proeza1: character.proeza1,
+    proeza2: character.proeza2,
+    proeza3: character.proeza3,
+    proeza4: character.proeza4,
+    proeza5: character.proeza5,
+    avatar: character.avatar,
+    stress1: character.stress1,
+    stress2: character.stress2,
+    stress3: character.stress3,
+    consecuencia2: character.consecuencia2,
+    consecuencia4: character.consecuencia4,
+    consecuencia6: character.consecuencia6,
+    recuperacion: character.recuperacion,
+    puntosFate: character.puntosFate,
   };
   const validationSchema = Yup.object().shape({
     nombre: Yup.string().required("Campo requerido"),
@@ -55,10 +57,10 @@ export default function CreateCharacterScreen({ navigation }) {
   });
 
   const handleSubmit = (values) => {
-    dispatch(setCharacter({ ...values, ownerId }));
-    trigger({ ...values, ownerId, avatar: image, id: uuid.v4() });
+    dispatch(setCharacter({ ...values, ownerId, id: character.id }));
+    trigger({ ...values, avatar: image });
     dispatch(clearImage());
-    navigation.navigate("CharacterStackNavigator");
+    navigation.goBack();
   };
 
   return (
@@ -108,7 +110,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "Cassandra la bruja oscura",
               ]}
               navigation={navigation}
-              currentPage={9}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -126,7 +128,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "Robusto tenor de la ópera",
               ]}
               navigation={navigation}
-              currentPage={9}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -144,7 +146,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "Una Robot enviado del futuro para proteger al elegido",
               ]}
               navigation={navigation}
-              currentPage={8}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -163,7 +165,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "no puedo evitar gritar cuando intento pasar desapercibido",
               ]}
               navigation={navigation}
-              currentPage={9}
+              currentPage={0}
             />
           </View>
           <BoxedTitle title="Aspectos" />
@@ -183,7 +185,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "portador de la espada del destino",
               ]}
               navigation={navigation}
-              currentPage={25}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -202,7 +204,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "portador de la espada del destino",
               ]}
               navigation={navigation}
-              currentPage={25}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -221,7 +223,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "portador de la espada del destino",
               ]}
               navigation={navigation}
-              currentPage={25}
+              currentPage={0}
             />
           </View>
           <BoxedTitle title="Estilos" />
@@ -234,7 +236,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "La puntuación que le puedes asignar va de 0 a 3, sabiendo que de todos tus 6 Estilos deben quedar | 1 = 0 (Mediocre) | 2 = 1 (Normal) | 2 = 2 (Bueno) | 1 = 3 (Grande) |",
               ]}
               navigation={navigation}
-              currentPage={17}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -246,7 +248,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "La puntuación que le puedes asignar va de 0 a 3, sabiendo que de todos tus 6 Estilos deben quedar | 1 = 0 (Mediocre) | 2 = 1 (Normal) | 2 = 2 (Bueno) | 1 = 3 (Grande) |",
               ]}
               navigation={navigation}
-              currentPage={18}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -259,7 +261,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "La puntuación que le puedes asignar va de 0 a 3, sabiendo que de todos tus 6 Estilos deben quedar | 1 = 0 (Mediocre) | 2 = 1 (Normal) | 2 = 2 (Bueno) | 1 = 3 (Grande) |",
               ]}
               navigation={navigation}
-              currentPage={18}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -271,7 +273,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "La puntuación que le puedes asignar va de 0 a 3, sabiendo que de todos tus 6 Estilos deben quedar | 1 = 0 (Mediocre) | 2 = 1 (Normal) | 2 = 2 (Bueno) | 1 = 3 (Grande) |",
               ]}
               navigation={navigation}
-              currentPage={18}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -283,7 +285,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "La puntuación que le puedes asignar va de 0 a 3, sabiendo que de todos tus 6 Estilos deben quedar | 1 = 0 (Mediocre) | 2 = 1 (Normal) | 2 = 2 (Bueno) | 1 = 3 (Grande) |",
               ]}
               navigation={navigation}
-              currentPage={18}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -295,7 +297,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "La puntuación que le puedes asignar va de 0 a 3, sabiendo que de todos tus 6 Estilos deben quedar | 1 = 0 (Mediocre) | 2 = 1 (Normal) | 2 = 2 (Bueno) | 1 = 3 (Grande) |",
               ]}
               navigation={navigation}
-              currentPage={18}
+              currentPage={0}
             />
           </View>
           <BoxedTitle title="Proezas" />
@@ -314,7 +316,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "Debido a que soy/tengo [describe algo que te haga excepcional, un objetoo elemento especial de tu equipo o cualquier otra cosa que te permita realizar cosas formidables], recibo un +2 para [elige una acción: Atacar, Defender, Crear una ventaja, Superar] de modo [elige un estilo: Cauto, Furtivo, Ingenioso, Llamativo, Rápido, Vigoroso] cuando [describe una circunstancia].",
               ]}
               navigation={navigation}
-              currentPage={31}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -331,7 +333,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "Debido a que soy un charlatán de primera, gano un +2 para Crear una ventaja de modo Furtivo cuando converso con alguien.",
               ]}
               navigation={navigation}
-              currentPage={31}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -348,7 +350,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "Debido a que soy aficionado los puzzles, gano un +2 para Superar obstáculos de modo Ingenioso cuando me encuentro ante un puzzle, un acertijo o un enigma similar.",
               ]}
               navigation={navigation}
-              currentPage={31}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -365,7 +367,7 @@ export default function CreateCharacterScreen({ navigation }) {
                 "Debido a que soy un duelista de fama mundial, gano un +2 para Atacar de modo Llamativo cuando lucho con mi espada en un duelo.",
               ]}
               navigation={navigation}
-              currentPage={31}
+              currentPage={0}
             />
           </View>
           <View style={styles.block}>
@@ -382,10 +384,10 @@ export default function CreateCharacterScreen({ navigation }) {
                 "Debido a que tengo un gran escudo normando, gano un +2 para Defender de modo Vigoroso cuando utilizo mi escudo en combate cuerpo a cuerpo.",
               ]}
               navigation={navigation}
-              currentPage={31}
+              currentPage={0}
             />
           </View>
-          <IconedButton onPress={formikProps.handleSubmit} type="save" />
+          <IconedButton onPress={formikProps.handleSubmit} type="edit" />
         </ScrollView>
       )}
     </Formik>

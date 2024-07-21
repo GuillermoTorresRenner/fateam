@@ -66,7 +66,7 @@ export default function BottomTabNavigator() {
       /> */}
 
       <Tab.Screen
-        name="Reglas"
+        name="Manual Reglas"
         component={RulesStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (

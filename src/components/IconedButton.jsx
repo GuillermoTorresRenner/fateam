@@ -6,15 +6,16 @@ export default function IconedButton({ onPress, type }) {
   return (
     <Pressable
       onPress={onPress}
-      style={{
+      style={({ pressed }) => ({
         ...styles.btn,
+        opacity: pressed ? 0.5 : 1,
         backgroundColor:
           type === "save"
             ? Theme.colors.success
             : type === "edit"
             ? Theme.colors.warning
             : Theme.colors.danger,
-      }}
+      })}
     >
       <>
         {type === "save" ? (

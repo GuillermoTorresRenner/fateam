@@ -3,9 +3,18 @@ import { Modal, StyleSheet, Text, View, Pressable } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import Theme from "../theme/Theme";
 
-export default function InfoAlert({ title, description, examples }) {
+export default function InfoAlert({
+  title,
+  description,
+  examples,
+  navigation,
+  currentPage = 0,
+}) {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const searchInRuleBook = () => {
+    setModalVisible(false);
+    navigation.navigate("RulesScreen", { currentPage });
+  };
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -40,13 +49,21 @@ export default function InfoAlert({ title, description, examples }) {
               }}
             >
               <Pressable
-                style={[styles.button, styles.buttonInfo]}
-                onPress={() => setModalVisible(!modalVisible)}
+                style={({ pressed }) => ({
+                  ...styles.button,
+                  ...styles.buttonInfo,
+                  opacity: pressed ? 0.5 : 1,
+                })}
+                onPress={searchInRuleBook}
               >
                 <Text style={styles.textStyle}>Ver Manual</Text>
               </Pressable>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={({ pressed }) => ({
+                  ...styles.button,
+                  ...styles.buttonClose,
+                  opacity: pressed ? 0.5 : 1,
+                })}
                 onPress={() => setModalVisible(!modalVisible)}
               >
                 <Text style={styles.textStyle}>Cerrar</Text>
@@ -55,7 +72,13 @@ export default function InfoAlert({ title, description, examples }) {
           </View>
         </View>
       </Modal>
-      <Pressable onPress={() => setModalVisible(true)} style={styles.btn}>
+      <Pressable
+        onPress={() => setModalVisible(true)}
+        style={({ pressed }) => ({
+          ...styles.btn,
+          opacity: pressed ? 0.5 : 1,
+        })}
+      >
         <Entypo name="info-with-circle" size={24} color="black" />
       </Pressable>
     </View>

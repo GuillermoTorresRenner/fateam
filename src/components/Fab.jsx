@@ -5,7 +5,13 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Fab({ navigation, goto }) {
   return (
-    <Pressable style={styles.fab} onPress={() => navigation.navigate(goto)}>
+    <Pressable
+      style={({ pressed }) => ({
+        ...styles.fab,
+        opacity: pressed ? 0.5 : 1,
+      })}
+      onPress={() => navigation.navigate(goto)}
+    >
       <Icon name="plus" color="white" size={20} />
     </Pressable>
   );

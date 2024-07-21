@@ -2,7 +2,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import BottomTabNavigator from "./BottomTabNavigator";
 import AuthStackNavigator from "./AuthStackNavigator";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { setUser } from "../features/UserSlice";
 import { getSession } from "../persistence";
 import MainStackNavigator from "./MainStackNavigator";
@@ -12,10 +11,9 @@ const Navigator = () => {
   const dispatch = useDispatch();
   (async () => {
     try {
-      const data = await getSession();
-      dispatch(
-        setUser({ email: data.email, token: data.token, userId: data.userId })
-      );
+      const { email, token, userId } = await getSession();
+      if (!email || !token || !userId) return;
+      dispatch(setUser({ email, token, userId }));
     } catch (error) {
       console.log(error);
     }
@@ -23,8 +21,7 @@ const Navigator = () => {
 
   return (
     <NavigationContainer>
-      {/* {user ? <BottomTabNavigator /> : <AuthStackNavigator />} */}
-      {user ? <MainStackNavigator /> : <AuthStackNavigator />}
+      {user?.user ? <MainStackNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   );
 };

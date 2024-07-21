@@ -1,11 +1,4 @@
-import {
-  Pressable,
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-} from "react-native";
+import { ScrollView, View, StyleSheet, Text, Image, Alert } from "react-native";
 
 import BoxedTitle from "../components/BoxedTitle";
 import IconedButton from "../components/IconedButton";
@@ -14,8 +7,31 @@ import StylesChip from "../components/StylesChip";
 import Theme from "../theme/Theme";
 import defaultImage from "../../assets/images/user.png";
 import { useSelector } from "react-redux";
+import { useDeleteChararacterMutation } from "../services/characterServices";
 export default function CharacterDetailScreen({ navigation, route }) {
   const character = useSelector((state) => state.character.character);
+  const [triggerDeleteCharacter] = useDeleteChararacterMutation();
+  const showAlert = () =>
+    Alert.alert(
+      "¿Eliminar Personaje?",
+      `¿Estás seguro de que deseas eliminar a ${character.nombre}?`,
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          style: "destructive",
+          text: "Eliminar",
+          onPress: deleteCharacter,
+        },
+      ]
+    );
+
+  const deleteCharacter = () => {
+    triggerDeleteCharacter(character.id);
+    navigation.navigate("CharactersScreen");
+  };
   return (
     <ScrollView>
       {character.avatar === "" ? (
@@ -121,7 +137,13 @@ export default function CharacterDetailScreen({ navigation, route }) {
         backgroundColor={Theme.colors.tertiary}
       />
 
-      <IconedButton onPress={() => console.log("click")} type="edit" />
+      <View style={styles.buttons}>
+        <IconedButton
+          onPress={() => navigation.navigate("EditCharacterScreen")}
+          type="edit"
+        />
+        <IconedButton onPress={showAlert} type="delete" />
+      </View>
     </ScrollView>
   );
 }
@@ -146,5 +168,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginVertical: 10,
     objectFit: "contain",
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 10,
   },
 });

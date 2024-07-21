@@ -3,6 +3,7 @@ import { baseUrl } from "../databases/realtimeDataBase";
 
 export const characterApi = createApi({
   reducerPath: "characterApi",
+  tagTypes: ["Character"],
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
     getCharactersByUserId: builder.query({
@@ -13,17 +14,38 @@ export const characterApi = createApi({
 
         return transformedResponse;
       },
-      keepUnusedDataFor: 0,
+      providesTags: ["Character"],
     }),
+
     postChararacter: builder.mutation({
       query: ({ ...character }) => ({
-        url: `characters.json`,
-        method: "POST",
+        url: `characters/${character.id}.json`,
+        method: "PUT",
         body: character,
       }),
+      invalidatesTags: ["Character"],
+    }),
+    deleteChararacter: builder.mutation({
+      query: (id) => ({
+        url: `characters/${id}.json`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Character"],
+    }),
+    updateCharacter: builder.mutation({
+      query: ({ ...character }) => ({
+        url: `characters/${character.id}.json`,
+        method: "PUT",
+        body: character,
+      }),
+      invalidatesTags: ["Character"],
     }),
   }),
 });
 
-export const { useGetCharactersByUserIdQuery, usePostChararacterMutation } =
-  characterApi;
+export const {
+  useGetCharactersByUserIdQuery,
+  usePostChararacterMutation,
+  useDeleteChararacterMutation,
+  useUpdateCharacterMutation,
+} = characterApi;

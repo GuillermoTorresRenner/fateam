@@ -6,11 +6,25 @@ import store from "./src/store/";
 import { SafeAreaView, Platform, StyleSheet } from "react-native";
 import Theme from "./src/theme/Theme";
 import Constant from "expo-constants";
-import { initSQLiteDB, deleteSession } from "./src/persistence/";
+import { initSQLiteDB, deleteSession, getSession } from "./src/persistence/";
 
 (async () => {
   try {
     await initSQLiteDB();
+  } catch (error) {
+    console.log(error);
+  }
+})();
+// (async () => {
+//   try {
+//     await deleteSession();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })();
+(async () => {
+  try {
+    const session = await getSession();
   } catch (error) {
     console.log(error);
   }

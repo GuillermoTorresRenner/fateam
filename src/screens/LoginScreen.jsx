@@ -75,7 +75,12 @@ export default LoginScreen = ({ navigation }) => {
             />
 
             <View style={styles.btnContainer}>
-              <Pressable onPress={formikProps.handleSubmit}>
+              <Pressable
+                onPress={formikProps.handleSubmit}
+                style={({ pressed }) => ({
+                  opacity: pressed ? 0.5 : 1,
+                })}
+              >
                 <View style={styles.btn}>
                   <Text
                     style={{
@@ -87,7 +92,12 @@ export default LoginScreen = ({ navigation }) => {
                   </Text>
                 </View>
               </Pressable>
-              <Pressable onPress={() => navigation.navigate("Register")}>
+              <Pressable
+                onPress={() => navigation.navigate("Register")}
+                style={({ pressed }) => ({
+                  opacity: pressed ? 0.5 : 1,
+                })}
+              >
                 <Text style={styles.register}>Crea una cuenta</Text>
               </Pressable>
             </View>

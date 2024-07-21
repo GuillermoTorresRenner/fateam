@@ -10,6 +10,7 @@ export const initSQLiteDB = async () => {
   try {
     const createTable = await db.execAsync(
       "CREATE TABLE IF NOT EXISTS users (userId TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, token TEXT NOT NULL);"
+      // "DROP TABLE IF EXISTS users;"
     );
     return createTable;
   } catch (error) {
@@ -43,9 +44,8 @@ export const getSession = async () => {
 export const deleteSession = async () => {
   const db = await initDB();
   try {
-    const deleteSession = await db.runAsync("DELETE FROM users;");
-    console.log("Sesión eliminada correctamente:", deleteSession);
-    return deleteSession;
+    const result = await db.runAsync("DELETE FROM  users;");
+    return result;
   } catch (error) {
     console.error("Error al eliminar la sesión:", error);
   }
