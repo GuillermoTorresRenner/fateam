@@ -7,6 +7,7 @@ import NotesStackNavigator from "./NotesStackNavigator";
 import Header from "../components/Header";
 import RulesStackNavigator from "./RulesStackNavigator";
 import CharacterDetailStackNavigator from "./CharacterDetailStackNavigator";
+import HealthStackNavigator from "./HealthStackNavigator";
 
 const Tab = createBottomTabNavigator();
 export default function BottomTabNavigator() {
@@ -38,7 +39,16 @@ export default function BottomTabNavigator() {
       />
 
       <Tab.Screen
-        name="Tiradas"
+        name="Salud"
+        component={HealthStackNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="heartbeat" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Acciones"
         component={DiceStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
