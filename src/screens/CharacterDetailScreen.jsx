@@ -30,7 +30,7 @@ export default function CharacterDetailScreen({ navigation, route }) {
 
   const deleteCharacter = () => {
     triggerDeleteCharacter(character.id);
-    navigation.navigate("CharactersScreen");
+    navigation.goBack();
   };
   return (
     <ScrollView>

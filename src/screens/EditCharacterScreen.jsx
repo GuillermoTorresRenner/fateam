@@ -58,7 +58,7 @@ export default function EditCharacterScreen({ navigation }) {
 
   const handleSubmit = (values) => {
     dispatch(setCharacter({ ...values, ownerId, id: character.id }));
-    trigger({ ...values, avatar: image });
+    trigger({ ...values, avatar: image ? image : character.avatar });
     dispatch(clearImage());
     navigation.goBack();
   };
@@ -387,7 +387,7 @@ export default function EditCharacterScreen({ navigation }) {
               currentPage={0}
             />
           </View>
-          <IconedButton onPress={formikProps.handleSubmit} type="edit" />
+          <IconedButton onPress={formikProps.handleSubmit} type="save" />
         </ScrollView>
       )}
     </Formik>

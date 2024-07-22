@@ -55,8 +55,14 @@ export default function CreateCharacterScreen({ navigation }) {
   });
 
   const handleSubmit = (values) => {
-    dispatch(setCharacter({ ...values, ownerId }));
-    trigger({ ...values, ownerId, avatar: image, id: uuid.v4() });
+    dispatch(setCharacter({ ...values, ownerId, notas: [] }));
+    trigger({
+      ...values,
+      ownerId,
+      avatar: image,
+      id: uuid.v4(),
+      notas: [],
+    });
     dispatch(clearImage());
     navigation.goBack();
   };

@@ -7,6 +7,7 @@ import EditCharacterScreen from "../screens/EditCharacterScreen";
 import CreateNotesScreen from "../screens/CreateNotesScreen";
 import Header from "../components/Header";
 import CharactersScreen from "../screens/CharactersScreen";
+import EditNoteScreen from "../screens/EditNotesScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,14 @@ export default function MainStackNavigator() {
           header: () => <Header title={"Crear nueva nota"} />,
         }}
         component={CreateNotesScreen}
+      />
+      <Stack.Screen
+        name="EditNoteScreen"
+        options={{
+          headerShown: true,
+          header: () => <Header title={"Editar Nota"} />,
+        }}
+        component={EditNoteScreen}
       />
 
       <Stack.Screen name="playScreen" component={BottomTabNavigator} />
