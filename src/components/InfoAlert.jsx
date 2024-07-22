@@ -79,7 +79,11 @@ export default function InfoAlert({
           opacity: pressed ? 0.5 : 1,
         })}
       >
-        <Entypo name="info-with-circle" size={24} color="black" />
+        <Entypo
+          name="info-with-circle"
+          size={25}
+          color={Theme.colors.tertiary}
+        />
       </Pressable>
     </View>
   );

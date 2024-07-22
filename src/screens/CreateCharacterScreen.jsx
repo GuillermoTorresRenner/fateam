@@ -58,7 +58,7 @@ export default function CreateCharacterScreen({ navigation }) {
     dispatch(setCharacter({ ...values, ownerId }));
     trigger({ ...values, ownerId, avatar: image, id: uuid.v4() });
     dispatch(clearImage());
-    navigation.navigate("CharacterStackNavigator");
+    navigation.goBack();
   };
 
   return (
