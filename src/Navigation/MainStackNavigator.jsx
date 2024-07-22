@@ -8,6 +8,7 @@ import CreateNotesScreen from "../screens/CreateNotesScreen";
 import Header from "../components/Header";
 import CharactersScreen from "../screens/CharactersScreen";
 import EditNoteScreen from "../screens/EditNotesScreen";
+import RollDiceScreen from "../screens/RollDiceScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -66,6 +67,14 @@ export default function MainStackNavigator() {
           header: () => <Header title={"Editar Nota"} />,
         }}
         component={EditNoteScreen}
+      />
+      <Stack.Screen
+        name="RollDiceScreen"
+        options={{
+          headerShown: true,
+          header: () => <Header title={"Tirada de dados"} />,
+        }}
+        component={RollDiceScreen}
       />
 
       <Stack.Screen name="playScreen" component={BottomTabNavigator} />

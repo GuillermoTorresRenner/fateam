@@ -11,6 +11,7 @@ export default function StylesChip({ attribute, value }) {
   return (
     <View style={styles.attribute}>
       <Image
+        resizeMode="contain"
         source={
           attribute === "cauto"
             ? cauto
