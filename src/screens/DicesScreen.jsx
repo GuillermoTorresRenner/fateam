@@ -41,10 +41,7 @@ export default function DicesScreen({ navigation }) {
   }, [help, advantage, impulse, proeza, ptoFate]);
   useEffect(() => {
     setTotalSub(
-      parseInt(dificulty) +
-        parseInt(disadvantage) +
-        parseInt(otherPenalties) +
-        parseInt(consecuences)
+      parseInt(disadvantage) + parseInt(otherPenalties) + parseInt(consecuences)
     );
   }, [dificulty, disadvantage, otherPenalties, consecuences]);
 
@@ -65,7 +62,12 @@ export default function DicesScreen({ navigation }) {
         `Tienes  ${puntosFate} puntos Fate. ¿Deseas gastar 1 punto Fate para obtener un bonificador de +2 ?`,
 
         [
-          { text: "Gastar Punto", onPress: () => setPtoFate(2) },
+          {
+            text: "Gastar Punto",
+            onPress: () => {
+              setPtoFate(2);
+            },
+          },
           { text: "Cancelar" },
         ],
         {
@@ -133,10 +135,10 @@ export default function DicesScreen({ navigation }) {
   ]);
 
   const roll = () => {
-    if (!action || !style) {
+    if (!action || !style || dificulty === 0 || dificulty === "") {
       Alert.alert(
-        "Selecciona una acción y un estilo",
-        "Debes seleccionar una acción y un estilo para realizar la tirada",
+        "Selecciona datos faltantes",
+        "Debes seleccionar una acción, un estilo y una dificultad para realizar la tirada",
         [{ text: "OK" }],
         {
           cancelable: false,
@@ -157,6 +159,18 @@ export default function DicesScreen({ navigation }) {
       disadvantage,
       otherPenalties,
       consecuences,
+      stylePoints:
+        style === "cauto"
+          ? cauto
+          : style === "furtivo"
+          ? furtivo
+          : style === "llamativo"
+          ? llamativo
+          : style === "ingenioso"
+          ? ingenioso
+          : style === "rapido"
+          ? rapido
+          : vigoroso,
     });
   };
   return (
@@ -182,6 +196,29 @@ export default function DicesScreen({ navigation }) {
             : vigoroso}
         </Text>
       </View>
+      <BoxedTitle title="Dificultad" />
+      <View
+        style={{
+          ...styles.card,
+          alignSelf: "center",
+          borderRadius: 50,
+          width: 100,
+          height: 100,
+          backgroundColor: Theme.colors.tertiary,
+        }}
+      >
+        <TextInput
+          style={{
+            ...styles.input,
+            color: Theme.colors.danger,
+            fontSize: Theme.fontSizes.xl,
+          }}
+          value={dificulty}
+          onChangeText={setDificulty}
+          keyboardType="numeric"
+        />
+        <Text style={{ color: Theme.colors.white }}>Dificultad</Text>
+      </View>
       <BoxedTitle title="bonificadores" />
       <View style={styles.rowContainer}>
         <View style={styles.card}>
@@ -191,7 +228,7 @@ export default function DicesScreen({ navigation }) {
             onChangeText={setHelp}
             keyboardType="numeric"
           />
-          <Text>ayuda</Text>
+          <Text style={styles.cardText}>ayuda</Text>
         </View>
         <View style={styles.card}>
           <TextInput
@@ -200,7 +237,7 @@ export default function DicesScreen({ navigation }) {
             onChangeText={setAdvantage}
             keyboardType="numeric"
           />
-          <Text>Ventaja</Text>
+          <Text style={styles.cardText}>Ventaja</Text>
         </View>
         <View style={styles.card}>
           <TextInput
@@ -209,7 +246,7 @@ export default function DicesScreen({ navigation }) {
             onChangeText={setImpulse}
             keyboardType="numeric"
           />
-          <Text>Impulso</Text>
+          <Text style={styles.cardText}>Impulso</Text>
         </View>
         <View style={styles.card}>
           <TextInput
@@ -218,27 +255,18 @@ export default function DicesScreen({ navigation }) {
             onChangeText={setProeza}
             keyboardType="numeric"
           />
-          <Text>Proeza</Text>
+          <Text style={styles.cardText}>Proeza</Text>
         </View>
         <Pressable style={styles.card} onPress={consumePtos}>
           <Text style={{ ...styles.input, color: Theme.colors.success }}>
             {ptoFate === 0 ? "" : ptoFate}
           </Text>
-          <Text>{puntosFate}: Ptos Fate</Text>
+          <Text style={styles.cardText}>{puntosFate}: Ptos Fate</Text>
         </Pressable>
       </View>
-      <Text style={styles.stylePoint}>{totalAdd}</Text>
+      <Text style={styles.stylePoint}>{isNaN(totalAdd) ? 0 : totalAdd}</Text>
       <BoxedTitle title="Dificultades" />
       <View style={styles.rowContainer}>
-        <View style={styles.card}>
-          <TextInput
-            style={{ ...styles.input, color: Theme.colors.danger }}
-            value={dificulty}
-            onChangeText={setDificulty}
-            keyboardType="numeric"
-          />
-          <Text>Dificultad</Text>
-        </View>
         <View style={styles.card}>
           <TextInput
             style={{ ...styles.input, color: Theme.colors.danger }}
@@ -246,7 +274,7 @@ export default function DicesScreen({ navigation }) {
             onChangeText={setDisadvantage}
             keyboardType="numeric"
           />
-          <Text>Desventaja</Text>
+          <Text style={styles.cardText}>Desventaja</Text>
         </View>
         <View style={styles.card}>
           <TextInput
@@ -255,7 +283,7 @@ export default function DicesScreen({ navigation }) {
             onChangeText={setConsecuences}
             keyboardType="numeric"
           />
-          <Text>Consec.</Text>
+          <Text style={styles.cardText}>Consec.</Text>
         </View>
         <View style={styles.card}>
           <TextInput
@@ -264,7 +292,7 @@ export default function DicesScreen({ navigation }) {
             onChangeText={setOtherPenalties}
             keyboardType="numeric"
           />
-          <Text>Otros</Text>
+          <Text style={styles.cardText}>Otros</Text>
         </View>
       </View>
       <Text style={{ ...styles.stylePoint, color: Theme.colors.danger }}>
@@ -328,5 +356,8 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.white,
     width: "18%",
     height: 80,
+  },
+  cardText: {
+    fontSize: 10,
   },
 });

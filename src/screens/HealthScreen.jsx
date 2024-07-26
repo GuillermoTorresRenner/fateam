@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { View, Switch, StyleSheet, Text, TextInput } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Switch,
+  StyleSheet,
+  Text,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import InfoAlert from "../components/InfoAlert";
 import Theme from "../theme/Theme";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +54,7 @@ export default function HealthScreen({ navigation }) {
   const toggleSwitch3 = () => setStress3((previousState) => !previousState);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View
         style={{
           flexDirection: "row",
@@ -61,7 +68,7 @@ export default function HealthScreen({ navigation }) {
           paddingHorizontal: "10%",
         }}
       >
-        <Text style={{ ...styles.text, fontSize: Theme.fontSizes.lg }}>
+        <Text style={{ ...styles.text, fontSize: Theme.fontSizes.md }}>
           Contadores de Stress
         </Text>
         <InfoAlert
@@ -152,7 +159,7 @@ export default function HealthScreen({ navigation }) {
         <Text
           style={{
             ...styles.text,
-            fontSize: Theme.fontSizes.lg,
+            fontSize: Theme.fontSizes.md,
           }}
         >
           Consecuencias
@@ -219,7 +226,7 @@ export default function HealthScreen({ navigation }) {
       </View>
       {/* ---------------------- */}
       <IconedButton onPress={updateData} type={"save"} />
-    </View>
+    </ScrollView>
   );
 }
 

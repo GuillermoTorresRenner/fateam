@@ -1,6 +1,5 @@
 import * as SQLite from "expo-sqlite";
 
-// Inicializa la base de datos de forma segura
 async function initDB() {
   return SQLite.openDatabaseAsync("app.db");
 }
@@ -10,7 +9,6 @@ export const initSQLiteDB = async () => {
   try {
     const createTable = await db.execAsync(
       "CREATE TABLE IF NOT EXISTS users (userId TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, token TEXT NOT NULL);"
-      // "DROP TABLE IF EXISTS users;"
     );
     return createTable;
   } catch (error) {
