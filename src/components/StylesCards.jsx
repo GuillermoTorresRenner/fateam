@@ -179,7 +179,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   card: {
-    padding: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 10,
     borderRadius: 10,
     alignItems: "center",
     shadowColor: Theme.colors.black,
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "bold",
-    fontSize: Theme.fontSizes.sm,
+    fontSize: 8,
   },
   description: {
     padding: 15,

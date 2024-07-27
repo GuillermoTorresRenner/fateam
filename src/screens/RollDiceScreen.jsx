@@ -136,6 +136,7 @@ export default function RollDiceScreen({ navigation, route }) {
             : ""
         }
         accion={action}
+        estilo={style}
       />
     </ScrollView>
   );

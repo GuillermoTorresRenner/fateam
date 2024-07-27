@@ -34,7 +34,7 @@ export default function CharacterDetailScreen({ navigation, route }) {
   };
   return (
     <ScrollView>
-      {character.avatar === "" ? (
+      {character.avatar === "" || character.avatar === undefined ? (
         <Image source={defaultImage} style={styles.avatar} />
       ) : (
         <Image source={{ uri: character.avatar }} style={styles.avatar} />

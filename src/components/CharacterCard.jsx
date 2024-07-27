@@ -17,7 +17,7 @@ export default function CharacterCard({ character, navigation }) {
   return (
     <Pressable onPress={handleCharacter}>
       <View style={styles.card}>
-        {character.avatar === "" ? (
+        {character.avatar === "" || character.avatar === undefined ? (
           <Image source={defaulImage} style={styles.avatar} />
         ) : (
           <Image source={{ uri: character.avatar }} style={styles.avatar} />
