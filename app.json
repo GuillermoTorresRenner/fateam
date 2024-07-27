@@ -7,7 +7,6 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-   
     ],
     "name": "Fate",
     "slug": "Fate",
@@ -27,10 +26,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.devateleur.Fate"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "02aba33f-858b-4219-a696-a9da5f643750"
+      }
     }
   }
 }
